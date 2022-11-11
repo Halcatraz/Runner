@@ -9,72 +9,39 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        //Creating a Group object
-        //useless now ou pas :/
+    public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
         Pane pane = new Pane(root);
-        Camera camera = new Camera(100, 100);
 
+        GameScene theScene = new GameScene(pane, 600, 300, true);
 
-        //Creating a scene object
-        GameScene theScene = new GameScene(root, 600, 400, true, camera ); // = new Scene(pane, 600, 400,true);
-        theScene = theScene.render(pane);
-        //Setting title to the Stage
+        // title
         primaryStage.setTitle("Hello world");
-        //Adding scene to the stage
-
-        // creating an image
-        //ici le sprite est le hero
-        Image spriteSheet = new Image("file:heros.png");
-        Image backGroundSheet = new Image("file:desert.png");
-        //setting the image view
-        ImageView sprite = new ImageView(spriteSheet);
-        ImageView backGround = new ImageView(backGroundSheet);
-        //ajoute l'image au sprite
-        sprite.setImage(spriteSheet);
-        backGround.setImage(backGroundSheet);
-/*
-        Only what’s in this rectangle will be displayed
-        v et v1 sont les positions/pixels de debut de l'image à afficher
-            donc en modifiant v on choisit sa posture de course
-                 en modifiant v1 on choisit s'il court, saute, court et tire, saute et tire
-        v2 et v3 sont la largeur et la hauteur de l'image
-            constante à ne pas modifier (65 et 100)
-
-        /!\ les largeurs necessaires ne sont pas les mêmes en fonction de la frame
-        le hero court (6 frame) :
-            - position 1 : (20, 0, 65, 100)
-            - position 2 : (96, 0, 65, 100)
-            - position 3 : (161, 0, 65, 100)
-            - position 4 : (96, 0)
-            - position 5 : (96, 0)
-            - position 6 : (96, 0)
-
- */
-        sprite.setViewport(new Rectangle2D(20,00,65,100));
-        //setting the positiion of the sprite
-        //debut de l'image dans le coin en haut à gauche
-        sprite.setX(200);
-        sprite.setY(300);
-
-        //GameScene scene = new GameScene();
-        //permet d'ajouter l'image dans la scene
-
-        pane.getChildren().add(backGround);
-        pane.getChildren().add(sprite);
-
-        //GameScene.render(camera);
         primaryStage.setScene(theScene);
-        //Displaying the contents of the stage
+        // Displaying the contents of the stage
         primaryStage.show();
 
 
+/*
+        for (int i = 0; i < 100; i++) {
+            theScene.moveCamera(10, 0);
+            Thread.sleep(100);
+            primaryStage.show();
+        }
+*/
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                theScene.moveCamera(1, 0);
+                // pas besoin de show car si on le met ici, il reouvre la fenetre
+            }
+        };
+        timer.start();
 
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
