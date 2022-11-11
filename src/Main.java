@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -18,9 +17,10 @@ public class Main extends Application {
         Pane pane = new Pane(root);
         Camera camera = new Camera(100, 100);
 
+
         //Creating a scene object
-        Scene theScene; // = new Scene(pane, 600, 400,true);
-        theScene = GameScene.render(pane, camera);
+        GameScene theScene = new GameScene(root, 600, 400, true, camera ); // = new Scene(pane, 600, 400,true);
+        theScene = theScene.render(pane);
         //Setting title to the Stage
         primaryStage.setTitle("Hello world");
         //Adding scene to the stage
@@ -28,10 +28,13 @@ public class Main extends Application {
         // creating an image
         //ici le sprite est le hero
         Image spriteSheet = new Image("file:heros.png");
+        Image backGroundSheet = new Image("file:desert.png");
         //setting the image view
         ImageView sprite = new ImageView(spriteSheet);
+        ImageView backGround = new ImageView(backGroundSheet);
         //ajoute l'image au sprite
         sprite.setImage(spriteSheet);
+        backGround.setImage(backGroundSheet);
 /*
         Only what’s in this rectangle will be displayed
         v et v1 sont les positions/pixels de debut de l'image à afficher
@@ -53,19 +56,19 @@ public class Main extends Application {
         sprite.setViewport(new Rectangle2D(20,00,65,100));
         //setting the positiion of the sprite
         //debut de l'image dans le coin en haut à gauche
-        sprite.setX(100);
-        sprite.setY(100);
+        sprite.setX(200);
+        sprite.setY(300);
 
         //GameScene scene = new GameScene();
         //permet d'ajouter l'image dans la scene
-        pane.getChildren().add(sprite);
 
+        pane.getChildren().add(backGround);
+        pane.getChildren().add(sprite);
 
         //GameScene.render(camera);
         primaryStage.setScene(theScene);
         //Displaying the contents of the stage
         primaryStage.show();
-
 
 
 

@@ -29,6 +29,8 @@ public class AnimatedThing {
         this.state = state;
         this.lastState = lastState;
         this.fileName = fileName;
-
     }
+
+    //public uptade()
+
 }
