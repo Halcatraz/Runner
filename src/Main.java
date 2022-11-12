@@ -36,12 +36,16 @@ public class Main extends Application {
 */
         AnimationTimer timer = new AnimationTimer() {
             @Override
-            public void handle(long l) {
-                theScene.moveCamera(1, 0);
+            public void handle(long time) {
+                // time est en nanoseconde
+                theScene.moveCamera(time, 100, 0);
+                theScene.updateHero(time);
                 // pas besoin de show car si on le met ici, il reouvre la fenetre
+                // System.out.println(l);
             }
         };
         timer.start();
-
+        //Hero hero = new Hero("heros.png", 1, 0, 6);
+        //System.out.println(hero.getAttitude());
     }
 }

@@ -6,6 +6,8 @@ public class GameScene extends Scene {
     private final Camera camera;
     private final StaticThing backgroundLeft;
     private final StaticThing backgroundRight;
+    private final Hero hero;
+    public long lastCallTime;
 
 
     public GameScene(Pane pane, double lengthScene, double heightScene, boolean b) {
@@ -18,6 +20,16 @@ public class GameScene extends Scene {
 
         // Call render to align background to camera for the first time
         render();
+
+        // Instancing hero
+        hero = new Hero("heros.png", 0, 0, 0, 0, 0);
+        hero.getImageView().setX(100);
+        hero.getImageView().setY(100);
+        hero.setViewport(hero.getAttitude(), hero.getIndex(), 85, 100);
+        pane.getChildren().add(hero.getImageView());
+
+        // initialization timer
+        //lastCallTime = time;
     }
 
     public void render() {
@@ -44,13 +56,29 @@ public class GameScene extends Scene {
         backgroundLeft.getImageView().setY(0);
     }
 
-    public void moveCamera(double dx, double dy) {
+    public void moveCamera(long time, double dx, double dy) {
         double Cx = camera.getX();
         double Cy = camera.getY();
 
-        camera.setX(Cx + dx);
-        camera.setY(Cy + dy);
+        if (time >= lastCallTime + camera.getCameraTimeToWait()) {
+            camera.setX(Cx + dx);
+            camera.setY(Cy + dy);
+            render();
+        }
 
-        render();
+    }
+
+    public void updateHero(long timestamp) {
+        hero.update(lastCallTime, timestamp, hero.getAttitude());
+        hero.setViewport(hero.getAttitude(), hero.getIndex(), 75, 100);
+
+/*
+        System.out.println("maxIndex = " + hero.getMaxIndex());
+        System.out.println("Index = " + hero.getIndex());
+        System.out.println("lastCallTime = " + lastCallTime);
+        System.out.println("timestamp = " + timestamp);
+*/
+        lastCallTime = timestamp;
+
     }
 }

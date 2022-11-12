@@ -1,6 +1,7 @@
 public class Camera {
     private final double lengthCamera;
     private final double heightCamera;
+    protected int cameraTimeToWait;
     private double x;
     private double y;
 
@@ -9,6 +10,7 @@ public class Camera {
         this.y = y;
         this.lengthCamera = lengthCamera;
         this.heightCamera = heightCamera;
+        this.cameraTimeToWait = 10000;
     }
 
     public double getX() {
@@ -33,6 +35,10 @@ public class Camera {
 
     public double getHeightCamera() {
         return heightCamera;
+    }
+
+    public int getCameraTimeToWait() {
+        return cameraTimeToWait;
     }
 
     @Override
