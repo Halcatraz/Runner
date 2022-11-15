@@ -10,7 +10,7 @@ public class Camera {
         this.y = y;
         this.lengthCamera = lengthCamera;
         this.heightCamera = heightCamera;
-        this.cameraTimeToWait = 10000;
+        this.cameraTimeToWait = 10;
     }
 
     public double getX() {
@@ -47,5 +47,12 @@ public class Camera {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public void moveCamera(double dx, double dy) {
+        double Cx = getX();
+        double Cy = getY();
+        setX(Cx + dx);
+        setY(Cy + dy);
     }
 }
